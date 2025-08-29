@@ -1,0 +1,19 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GetStoredProcedureParameters]    Script Date: 28-08-2025 23:31:21 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER   proc [dbo].[USP_GetStoredProcedureParameters]
+@SPName NVARCHAR(200)
+AS
+	BEGIN
+		SELECT
+					PARAMETER_NAME,
+					PARAMETER_MODE,
+					DATA_TYPE
+				FROM INFORMATION_SCHEMA.PARAMETERS
+				WHERE SPECIFIC_NAME = @SPName
+				ORDER BY ORDINAL_POSITION;
+END
