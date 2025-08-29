@@ -1,0 +1,21 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_stock]    Script Date: 28-08-2025 23:30:38 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[SP_stock]
+	@ProductCode	INT = 0,
+	@ProductQty		INT = 0
+AS
+BEGIN
+	UPDATE	S
+	SET		S.Stk_Qty = (S.Stk_Qty - @ProductQty)
+	FROM	stock S
+		INNER JOIN Product (NOLOCK) P
+	ON		S.Stk_mm_id = P.Product_Id
+	WHERE	P.Product_Code = @ProductCode
+
+	DELETE FROM stock WHERE ISNULL(Stk_Qty,0) <= 0
+END
