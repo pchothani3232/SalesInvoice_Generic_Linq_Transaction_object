@@ -1,0 +1,23 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[StateMaster_Sp]    Script Date: 28-08-2025 23:31:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER        proc [dbo].[StateMaster_Sp]
+@status nvarchar(max) ='',
+@stateName nvarchar(max) =''
+AS
+
+BEGIN
+	if @status='insert'
+		BEGIN
+			insert into StateMaster (State_Name)values(@stateName);
+		END
+	
+	else if @status='select'
+		Begin
+			select State_Id,State_Name as StateName from StateMaster;
+		END
+END
