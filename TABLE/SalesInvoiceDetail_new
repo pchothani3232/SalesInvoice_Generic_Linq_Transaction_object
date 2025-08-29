@@ -1,0 +1,28 @@
+USE [DatabaseConfiguration1]
+GO
+
+/****** Object:  Table [dbo].[SalesInvoiceDetail_new]    Script Date: 28-08-2025 23:25:36 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SalesInvoiceDetail_new](
+	[sid_ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[sid_SIH_id] [bigint] NULL,
+	[sid_mm_id] [bigint] NULL,
+	[sid_Qty] [numeric](18, 0) NULL,
+	[sid_FreeQty] [numeric](18, 0) NULL,
+	[sid_Discount] [numeric](18, 2) NULL,
+	[sid_DiscountAmt] [numeric](18, 2) NULL,
+	[sid_SubTotal] [numeric](18, 2) NULL,
+	[sid_NetAmount] [numeric](18, 2) NULL,
+ CONSTRAINT [PK_SalesInvoiceDetail_new] PRIMARY KEY CLUSTERED 
+(
+	[sid_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
