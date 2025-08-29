@@ -1,0 +1,17 @@
+USE [DatabaseConfiguration1]
+GO
+
+/****** Object:  Table [dbo].[stock]    Script Date: 28-08-2025 23:27:19 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[stock](
+	[Stk_mm_id] [bigint] NULL,
+	[Stk_Qty] [numeric](18, 0) NULL
+) ON [PRIMARY]
+GO
+
+
