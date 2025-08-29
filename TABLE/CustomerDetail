@@ -1,0 +1,24 @@
+USE [DatabaseConfiguration1]
+GO
+
+/****** Object:  Table [dbo].[CustomerDetail]    Script Date: 28-08-2025 23:23:34 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CustomerDetail](
+	[Customer_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Customer_Name] [nvarchar](max) NOT NULL,
+	[Customer_PhoneNumber] [nvarchar](15) NOT NULL,
+	[Customer_Address] [nvarchar](max) NOT NULL,
+	[Customer_State_id] [int] NOT NULL,
+ CONSTRAINT [PK_CustomerDetail] PRIMARY KEY CLUSTERED 
+(
+	[Customer_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
