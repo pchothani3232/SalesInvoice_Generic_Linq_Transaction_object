@@ -1,0 +1,47 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SalesInvoiceDetail]    Script Date: 28-08-2025 23:31:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER   proc [dbo].[USP_SalesInvoiceDetail]
+@Product_Name nvarchar(max),
+@Product_Code numeric(18,0) = 0,
+@Product_SaleRate numeric(18,0)='',
+@Product_Qty int ='',
+@Product_FreeQty int ='',
+@Product_Discount numeric(18,0)='',
+@Product_SubTotal numeric(18,0) ='',
+@Product_NetAmount numeric(18,0) ='',
+@Status nvarchar(max) =''
+as
+begin
+
+	if @Status = 'insert'
+	  BEGIN
+		insert into SalesInvoiceDetail
+		( Product_Name
+		 ,Product_Code
+		 ,Product_SaleRate
+		 ,Product_Qty
+		 ,Product_FreeQty
+		 ,Product_Discount
+		 ,Product_SubTotal
+		 ,Product_NetAmount)
+		values
+		(
+		 @Product_Name
+		,@Product_Code
+		,@Product_SaleRate
+		,@Product_Qty
+		,@Product_FreeQty
+		,@Product_Discount
+		,@Product_SubTotal
+		,@Product_NetAmount
+		);
+	  END
+END
+
+
+
