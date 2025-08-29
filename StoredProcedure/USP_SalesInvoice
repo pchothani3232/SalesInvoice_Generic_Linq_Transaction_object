@@ -1,0 +1,48 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SalesInvoice]    Script Date: 28-08-2025 23:31:38 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[USP_SalesInvoice]  
+	@Status				 VARCHAR(MAX) = '',  
+	@SalseInvoice_Id	 INT = 0,
+	@SalesInvoice_Date	 DATE = NULL,
+	@SalesInvoice_Number VARCHAR(MAX) = '',
+	@GrossAmount		 NUMERIC(18,2) = 0,
+	@DiscountPer		 NUMERIC(18,2) = 0,
+	@DiscountAmount		 NUMERIC(18,2) = 0,
+	@Roundoff			 NUMERIC(18,2) = 0,
+	@Total_Amount		 NUMERIC(18,2) = 0,
+	@Customer_Id		 INT = 0,
+	@Sate_Id			 INT =0 
+AS  
+BEGIN  
+	if @Status = 'InsertSalesInvoice'  
+	BEGIN
+		INSERT INTO [dbo].[SalesInvoice]
+           ([SalesInvoice_Date]
+           ,[SalesInvoice_Number]
+           ,[GrossAmount]
+           ,[DiscountAmount]
+         
+           ,[NetAmount]
+           ,[Customer_Id]
+		   ,State_Id
+		   ,Roundoff
+		   ,DiscountPer)
+     VALUES
+           (@SalesInvoice_Date
+           ,@SalesInvoice_Number
+           ,@GrossAmount
+           ,@DiscountAmount       
+           ,@Total_Amount
+           ,@Customer_Id
+		   ,@Sate_Id               --Customer StateId 
+		   ,@Roundoff
+		   ,@DiscountPer)
+		select @@IDENTITY  
+	END   
+END
+
