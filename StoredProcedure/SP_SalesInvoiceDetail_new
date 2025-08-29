@@ -1,0 +1,37 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_SalesInvoiceDetail_new]    Script Date: 28-08-2025 23:30:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+	ALTER   proc [dbo].[SP_SalesInvoiceDetail_new]
+	@SalesInvoiceDetail UDTT_SalesInvoiceDetail_new readonly
+
+	as
+	begin
+	     	INSERT INTO SalesInvoiceDetail_new 			
+				(
+				sid_SIH_id
+				,sid_mm_id     -- SalesInvoice Product Code
+				,sid_Qty
+				,sid_FreeQty
+				,sid_Discount
+				,sid_DiscountAmt
+				,sid_SubTotal
+				,sid_NetAmount
+				)
+				select				 
+				 sid_SIH_id
+				,sid_mm_id     -- SalesInvoice Product Code
+				,sid_Qty
+				,sid_FreeQty
+				,sid_Discount
+				,sid_DiscountAmt
+				,sid_SubTotal
+				,sid_NetAmount				
+				from @SalesInvoiceDetail;
+		select @@IDENTITY  
+	END
+	
