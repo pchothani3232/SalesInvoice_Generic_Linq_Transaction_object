@@ -1,0 +1,75 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_usermaster]    Script Date: 28-08-2025 23:32:17 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--[USP_usermaster] @Status = 'InsertCustomerInfo',@MobileNo = '5165465+',@CustomerName = 'fdgdf',@Customer_State='dfgd',@Customer_Address='dfhgsdf'  
+ALTER    PROCEDURE [dbo].[USP_usermaster]  
+ @Status            VARCHAR(MAX) = '',  
+ @MobileNo           VARCHAR(MAX) = '',  
+ @CustomerName         VARCHAR(MAX) = '',  
+ @Customer_State_id    int = 0,  
+ @Customer_Address   VARCHAR(MAX) = '' 
+AS  
+BEGIN  
+
+	 if @Status = 'getuserinfo'  
+	 BEGIN  
+	      /*Checking for existance */
+		  IF EXISTS
+		  (SELECT ISNULL(CD.Customer_Id,0) AS Customer_Id  
+		   FROM [CustomerDetail] (NOLOCK) CD  
+		   WHERE CD.Customer_PhoneNumber = @MobileNo)  
+
+	      BEGIN  
+		  /* returning data */
+			   SELECT ISNULL(CD.Customer_Id,0) AS Customer_Id  
+			   FROM [CustomerDetail] (NOLOCK) CD  
+			   WHERE CD.Customer_PhoneNumber = @MobileNo  
+	      END  
+
+		 ELSE   
+			 BEGIN  
+			   SELECT 0 AS Customer_Id  
+			 END  
+	 END  
+
+	 
+    -- 2. Insert new customer
+	 ELSE IF @Status = 'InsertCustomerInfo'  
+	  BEGIN  
+		  INSERT INTO [CustomerDetail] (  
+		        Customer_Name  
+			   ,Customer_PhoneNumber  
+			   ,Customer_State_id 
+			   ,Customer_Address)  
+		  VALUES  
+			  (  
+			   @CustomerName  
+			   ,@MobileNo  
+			   ,@Customer_State_id  
+			   ,@Customer_Address 
+			  )  
+	    select @@IDENTITY  
+	  END  
+
+	     -- 3. Update existing customer
+    ELSE IF @Status = 'UpdateCustomerInfo'  
+    BEGIN  
+        UPDATE CustomerDetail  
+        SET  
+            Customer_Name      = @CustomerName,  
+            Customer_PhoneNumber = @MobileNo,  
+            Customer_State_id  = @Customer_State_id,  
+            Customer_Address   = @Customer_Address  
+        WHERE Customer_PhoneNumber = @MobileNo;  
+
+        -- Return updated ID  
+        SELECT Customer_Id FROM CustomerDetail WHERE Customer_PhoneNumber = @MobileNo;  
+    END  
+
+END
+
+
