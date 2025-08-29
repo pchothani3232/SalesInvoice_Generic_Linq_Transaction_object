@@ -1,0 +1,43 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[Product_Sp]    Script Date: 28-08-2025 23:29:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER        proc [dbo].[Product_Sp]
+@Product_Id int = null,
+@Product_Name nvarchar(100)='',
+@Product_Code nvarchar(50)='',
+@Product_SalesRate numeric(18,2)=0,
+@Product_FreeQty decimal(10,2) =0,
+@Product_Discount decimal(5,2)=0,
+@Product_AvailableQty decimal(10,2)=0,
+@Status nvarchar(max)
+AS
+BEGIN
+
+	SELECT	P.Product_Id,
+			P.Product_Name,
+			P.Product_Code,
+			P.Product_SalesRate,
+			ISNULL(S.Stk_Qty,0) AS Product_AvailableQty
+	FROM	Product (NOLOCK) P
+		INNER JOIN	stock (NOLOCK) S
+	ON		P.Product_Id = S.Stk_mm_id
+	--WHERE	(@Status='SearchByCode' AND Product_Code like  @Product_Code + '%') OR
+	--		(@Status='SearchByName' AND Product_Name like  @Product_Name +'%')
+
+	WHERE	(@Status='SearchByCode' AND Product_Code like  @Product_Name + '%') OR
+			(@Status='SearchByName' AND Product_Name like  @Product_Name +'%')
+	--IF @Status='SearchByCode'
+	--BEGIN
+	--	select * from Product where Product_Code like  @Product_Code + '%' ;
+
+	--END
+
+	--IF @Status='SearchByName'
+	--BEGIN
+	--	select * from Product where Product_Name like  @Product_Name +'%' ;
+	--END
+END
