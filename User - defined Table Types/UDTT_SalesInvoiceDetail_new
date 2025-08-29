@@ -1,0 +1,17 @@
+USE [DatabaseConfiguration1]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[UDTT_SalesInvoiceDetail_new]    Script Date: 28-08-2025 23:33:14 ******/
+CREATE TYPE [dbo].[UDTT_SalesInvoiceDetail_new] AS TABLE(
+	[sid_SIH_id] [bigint] NULL,
+	[sid_mm_id] [bigint] NULL,
+	[sid_Qty] [numeric](18, 2) NULL,
+	[sid_FreeQty] [numeric](18, 2) NULL,
+	[sid_Discount] [numeric](18, 2) NULL,
+	[sid_DiscountAmt] [numeric](18, 2) NULL,
+	[sid_SubTotal] [numeric](18, 2) NULL,
+	[sid_NetAmount] [numeric](18, 2) NULL
+)
+GO
+
+
