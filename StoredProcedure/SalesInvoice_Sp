@@ -1,0 +1,43 @@
+USE [DatabaseConfiguration1]
+GO
+/****** Object:  StoredProcedure [dbo].[SalesInvoice_Sp]    Script Date: 28-08-2025 23:29:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER        PROCEDURE [dbo].[SalesInvoice_Sp]
+    @status NVARCHAR(MAX) = '',
+    @CustomerName NVARCHAR(MAX) = '',
+    @MobileNumber NVARCHAR(MAX) = '',
+	@SalesInvoiceNumber NUMERIC(18,0)= NULL OUTPUT
+AS
+BEGIN
+	 -- Auto-generate SalesInvoiceNumber
+	  IF @status = 'SalesInvoiceNumber'
+	  BEGIN
+		SELECT @SalesInvoiceNumber = ISNULL(MAX(SalesInvoice_Number), 10000) + 1 FROM SalesInvoice;
+		SELECT @SalesInvoiceNumber AS SalesInvoiceNumber;
+	  END
+
+    -- If searching by name or mobile
+    IF @status = 'SearchByNameAndMobileNo'
+    BEGIN
+   --     SELECT           
+   --         c.Customer_Name,
+			--c.Customer_PhoneNumber,
+			--c.Customer_State_id,
+   --         c.Customer_Address            
+   --     FROM CustomerDetail c
+   --     WHERE c.Customer_Name LIKE @CustomerName + '%'
+   --        OR c.Customer_PhoneNumber LIKE @MobileNumber + '%';
+   select c.Customer_Name,
+		c.Customer_PhoneNumber,
+		c.Customer_Address,
+		sm.State_Name as StateName
+		from CustomerDetail c 
+		left join 
+		StateMaster sm  on c.Customer_State_id = sm.State_Id
+		WHERE (@CustomerName IS NOT NULL AND c.Customer_Name LIKE @CustomerName + '%')
+           OR (@MobileNumber IS NOT NULL AND c.Customer_PhoneNumber LIKE  @MobileNumber + '%');
+    END
+END
