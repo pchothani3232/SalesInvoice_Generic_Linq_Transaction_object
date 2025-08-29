@@ -1,0 +1,43 @@
+USE [DatabaseConfiguration1]
+GO
+
+/****** Object:  Table [dbo].[SalesInvoice]    Script Date: 28-08-2025 23:24:37 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SalesInvoice](
+	[SalseInvoice_Id] [int] IDENTITY(1,1) NOT NULL,
+	[SalesInvoice_Date] [date] NULL,
+	[SalesInvoice_Number] [bigint] NULL,
+	[GrossAmount] [numeric](18, 2) NULL,
+	[DiscountAmount] [numeric](18, 2) NULL,
+	[NetAmount] [numeric](18, 2) NULL,
+	[Customer_Id] [int] NULL,
+	[State_Id] [int] NULL,
+	[Roundoff] [numeric](18, 2) NULL,
+	[DiscountPer] [numeric](18, 2) NULL,
+ CONSTRAINT [PK_SalesInvoice] PRIMARY KEY CLUSTERED 
+(
+	[SalseInvoice_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[SalesInvoice]  WITH CHECK ADD  CONSTRAINT [FK_SalesInvoice_CustomerDetail] FOREIGN KEY([Customer_Id])
+REFERENCES [dbo].[CustomerDetail] ([Customer_Id])
+GO
+
+ALTER TABLE [dbo].[SalesInvoice] CHECK CONSTRAINT [FK_SalesInvoice_CustomerDetail]
+GO
+
+ALTER TABLE [dbo].[SalesInvoice]  WITH CHECK ADD  CONSTRAINT [FK_SalesInvoice_StateMaster] FOREIGN KEY([State_Id])
+REFERENCES [dbo].[StateMaster] ([State_Id])
+GO
+
+ALTER TABLE [dbo].[SalesInvoice] CHECK CONSTRAINT [FK_SalesInvoice_StateMaster]
+GO
+
+
